@@ -82,10 +82,10 @@ VALUES
 -- Insert Departments
 select * from Department
 -----------------------------------------------------
-INSERT INTO Department (DepName, SSN, HireDate)
-select * from Department
+INSERT INTO Department (DepName, SSN, HireDate) VALUES
+
 -----------------------------------------------------
-VALUES
+
 ('IT', 1, '2020-01-01'),
 ('HR', 2, '2021-03-10'),
 ('Finance', 3, '2019-06-25'),
@@ -111,8 +111,9 @@ VALUES
 (5, 'Sur');
 ----------------------------------------------------------
 -- Insert Projects
-INSERT INTO Project (ProjectName, City, Location, DepNumber)
 select * from Project
+INSERT INTO Project (ProjectName, City, Location, DepNumber)
+
 ----------------------------------------------------------
 VALUES
 ('WebsiteRevamp', 'Muscat', 'Muscat', 1),
@@ -122,19 +123,21 @@ VALUES
 ('WarehouseUpgrade', 'Sur', 'Sur', 5);
 -----------------------------------------------------------
 -- Insert Work records
-INSERT INTO Work (SSN, ProjectNumber, Hours)
 select * from Work
+INSERT INTO Work (SSN, ProjectNumber, Hours)
+
 ----------------------------------------------------------
 VALUES
--(1, 1, 40),
+(1, 1, 40),
 (2, 2, 35),
 (3, 3, 30),
 (4, 4, 25),
 (5, 5, 20);
 ------------------------------------------------------------
 -- Insert Dependents
-INSERT INTO Dependent (SSN, DependentName, Gender, BirthDate)
 select * from Department
+INSERT INTO Dependent (SSN, DependentName, Gender, BirthDate)
+
 -------------------------------------------------------------
 VALUES
 (1, 'Layla', 0, '2015-08-10'),
@@ -155,8 +158,6 @@ UPDATE Work SET Hours = 45 WHERE SSN = 3 AND ProjectNumber = 3;
 -- Select all employees
 SELECT * FROM Employee;
 
--- Select employees supervised by employee 1
-SELECT FirstName, LastName FROM Employee WHERE Supervise = 1;
 -------------------------------------------------------------
 -- DELETE 
 -- Delete dependent 'Hamad' of employee 1
@@ -181,6 +182,9 @@ DELETE FROM Project WHERE ProjectNumber = 5;
 
 --4-figer 1: 
 -- use drop to delete table and then creat another (modify the previos one )
+
+--4-problem 4:
+-- i cant delete the foregon key , first i will break it from table then delete it .
 
 
 
