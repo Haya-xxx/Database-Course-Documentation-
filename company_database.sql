@@ -10,11 +10,6 @@ CREATE TABLE Employee (
     Supervise int,
     DepNumber int 
 );
-ALTER TABLE Employee
-ADD FOREIGN KEY (DepNumber) REFERENCES Department(DepNumber);
-
-ALTER TABLE Employee
-ADD FOREIGN KEY (Supervise) REFERENCES Employee(SSN);
 
 CREATE TABLE Department (
     DepNumber int primary key identity(1,1),
@@ -23,6 +18,12 @@ CREATE TABLE Department (
     HireDate DATE,
     FOREIGN KEY (SSN) REFERENCES Employee(SSN)
 );
+
+ALTER TABLE Employee
+ADD FOREIGN KEY (DepNumber) REFERENCES Department(DepNumber);
+
+ALTER TABLE Employee
+ADD FOREIGN KEY (Supervise) REFERENCES Employee(SSN);
 
 CREATE TABLE Location (
     DepNumber int,
@@ -45,7 +46,7 @@ CREATE TABLE Work (
     ProjectNumber int,
     Hours int,
     PRIMARY KEY (SSN, ProjectNumber),
-    FOREIGN KEY (SSN) REFERENCES Employee(SSN),
+  FOREIGN KEY (SSN) REFERENCES Employee(SSN),
     FOREIGN KEY (ProjectNumber) REFERENCES Project(ProjectNumber)
 );
 
@@ -58,10 +59,113 @@ CREATE TABLE Dependent (
 );
 
 DROP TABLE Dependent;
+-----------------------------------------------------
+--SHOW ALL THE TABLES
+select * from Employee
+select * from Department
+select * from Location
+select * from Project
+select * from Work
+select * from Department
+---------------------------------------------------
+-- Insert Employees
+select * from Employee
+---------------------------------------------------
+INSERT INTO Employee (FirstName, LastName, BirthDate, Gender)
+VALUES
+('Ali', 'Sultan', '1990-05-10', 1),
+('Sara', 'Hassan', '1995-07-12', 0),
+('Khalid', 'Omar', '1988-02-20', 1),
+('Noor', 'Salim', '1993-11-01', 0),
+('Mona', 'Fahad', '`1998-09-09', 0);
+-----------------------------------------------------
+-- Insert Departments
+select * from Department
+-----------------------------------------------------
+INSERT INTO Department (DepName, SSN, HireDate)
+select * from Department
+-----------------------------------------------------
+VALUES
+('IT', 1, '2020-01-01'),
+('HR', 2, '2021-03-10'),
+('Finance', 3, '2019-06-25'),
+('Marketing', 4, '2022-07-19'),
+('Operations', 5, '2018-11-11');
 
-DROP TABLE Dependent;
+-- Update Employee to assign Departments and Supervisors
+UPDATE Employee SET DepNumber = 1, Supervise = NULL WHERE SSN = 1;
+UPDATE Employee SET DepNumber = 2, Supervise = 1 WHERE SSN = 2;
+UPDATE Employee SET DepNumber = 3, Supervise = 1 WHERE SSN = 3;
+UPDATE Employee SET DepNumber = 4, Supervise = 3 WHERE SSN = 4;
+UPDATE Employee SET DepNumber = 5, Supervise = 2 WHERE SSN = 5;
+-------------------------------------------------------------
+-- Insert Locations
+select * from Location
+INSERT INTO Location (DepNumber, Location)
+------------------------------------
+VALUES
+(1, 'Muscat'),
+(2, 'Sohar'),
+(3, 'Salalah'),
+(4, 'Nizwa'),
+(5, 'Sur');
+----------------------------------------------------------
+-- Insert Projects
+INSERT INTO Project (ProjectName, City, Location, DepNumber)
+select * from Project
+----------------------------------------------------------
+VALUES
+('WebsiteRevamp', 'Muscat', 'Muscat', 1),
+('EmployeeWellness', 'Sohar', 'Sohar', 2),
+('Budget2025', 'Salalah', 'Salalah', 3),
+('NewAdCampaign', 'Nizwa', 'Nizwa', 4),
+('WarehouseUpgrade', 'Sur', 'Sur', 5);
+-----------------------------------------------------------
+-- Insert Work records
+INSERT INTO Work (SSN, ProjectNumber, Hours)
+select * from Work
+----------------------------------------------------------
+VALUES
+-(1, 1, 40),
+(2, 2, 35),
+(3, 3, 30),
+(4, 4, 25),
+(5, 5, 20);
+------------------------------------------------------------
+-- Insert Dependents
+INSERT INTO Dependent (SSN, DependentName, Gender, BirthDate)
+select * from Department
+-------------------------------------------------------------
+VALUES
+(1, 'Layla', 0, '2015-08-10'),
+(1, 'Hamad', 1, '2017-04-22'),
+(2, 'Omar', 1, '2020-03-30'),
+(3, 'Aisha', 0, '2012-11-15'),
+(5, 'Salem', 1, '2019-05-25');
+---------------------------------------------------------------
+-- UPDATE 
+-- Update Sara Hassan's last name to 'Al-Khalili'
+UPDATE Employee SET LastName = 'Al-Khalili' WHERE FirstName = 'Sara' AND LastName = 'Hassan';
 
+-- Increase hours worked by Khalid Omar on Project 3 to 45
+UPDATE Work SET Hours = 45 WHERE SSN = 3 AND ProjectNumber = 3;
 
+---------------------------------------------------------------
+-- SELECT
+-- Select all employees
+SELECT * FROM Employee;
+
+-- Select employees supervised by employee 1
+SELECT FirstName, LastName FROM Employee WHERE Supervise = 1;
+-------------------------------------------------------------
+-- DELETE 
+-- Delete dependent 'Hamad' of employee 1
+DELETE FROM Dependent WHERE SSN = 1 AND DependentName = 'Hamad';
+
+-- Delete Project 5
+DELETE FROM Work WHERE ProjectNumber = 5;
+DELETE FROM Project WHERE ProjectNumber = 5;
+----------------------------------------------------------
 
 
 -- the problem that i face during writing the codes 
